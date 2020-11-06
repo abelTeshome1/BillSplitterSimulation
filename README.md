@@ -1,3 +1,3 @@
 # CMSC436Project
-FeedTheKitty
+FeedTheKitty;
 Shaun, James, and Abel
