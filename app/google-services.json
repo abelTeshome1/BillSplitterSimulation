@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "287449547730",
+    "firebase_url": "https://feed-the-kitty-de4f2.firebaseio.com",
+    "project_id": "feed-the-kitty-de4f2",
+    "storage_bucket": "feed-the-kitty-de4f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287449547730:android:a99339ad203d972075be0b",
+        "android_client_info": {
+          "package_name": "com.example.feedthekitty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287449547730-5smlk89o4nmkbr8itmcdm85n5omel2r8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoGfmZohAfmJVBl6s8f-zsBHReCV6aOJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287449547730-5smlk89o4nmkbr8itmcdm85n5omel2r8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
