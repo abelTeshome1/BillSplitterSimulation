@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
 
         android:hint="Email"
+        android:text="iabespade@gmail.com"
         ></EditText>
 
     <EditText
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:hint="Password"
+        android:text="pikapika"
         ></EditText>
 
     <Button

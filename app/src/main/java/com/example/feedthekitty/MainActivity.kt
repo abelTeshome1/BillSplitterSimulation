@@ -1,14 +1,19 @@
 package com.example.feedthekitty
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.util.Log
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.SignInMethodQueryResult
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +23,9 @@ class MainActivity : AppCompatActivity() {
     private var passView: EditText? = null
     private var conPassView: EditText? = null
     private var validator = Validators()
+    private var eventView: EditText? = null
+    private var priceView: EditText? = null
+
 
     private var mAuth: FirebaseAuth? = null
 
@@ -29,12 +37,14 @@ class MainActivity : AppCompatActivity() {
         loginBtn!!.setOnClickListener(){ registerNewUser() }
         alreadyRegistered!!.setOnClickListener(){
             val intent = Intent(this, Login::class.java)
+
             startActivity(intent)
         }
+
     }
 
-    private fun registerNewUser() {
 
+    private fun registerNewUser() {
 
         val email: String = emailView!!.text.toString()
         val password: String = passView!!.text.toString()
@@ -57,15 +67,26 @@ class MainActivity : AppCompatActivity() {
         mAuth!!.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(applicationContext, "Registration successful!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        applicationContext,
+                        "Registration successful!",
+                        Toast.LENGTH_LONG
+                    ).show()
 
                     val intent = Intent(this, Login::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(applicationContext, "Registration failed! Please try again later", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        applicationContext,
+                        "Registration failed! Please try again later",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
+
     }
+
+
 
     private fun initializeViews() {
 
@@ -74,5 +95,6 @@ class MainActivity : AppCompatActivity() {
         emailView = findViewById(R.id.email)
         passView = findViewById(R.id.password)
         conPassView = findViewById(R.id.confirm_password)
+        eventView = findViewById(R.id.event)
     }
 }
