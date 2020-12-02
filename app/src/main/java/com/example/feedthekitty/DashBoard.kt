@@ -1,5 +1,6 @@
 package com.example.feedthekitty
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.Layout
@@ -92,6 +93,7 @@ class DashBoard : AppCompatActivity() {
                         val view: TextView = TextView(this)
 
                         view.text = enteredUser
+                        view.setTextColor(Color.parseColor("#000000"))
                         view.gravity = Gravity.CENTER;
                         view.textSize = 15F
 
