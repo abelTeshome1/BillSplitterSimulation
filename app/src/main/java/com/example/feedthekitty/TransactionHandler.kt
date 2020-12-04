@@ -15,23 +15,6 @@ class TransactionHandler {
     private var mAuth: FirebaseAuth? = null
     private lateinit var tabsReference: DatabaseReference
 
-
-    data class Tab(
-        val owner: String = "",
-        val users: String = "",
-        val paidUsers: String = "",
-        val totalRequested: Int = 0,
-        val balance: Int = 0,
-        val open: Boolean = true
-    )
-
-    data class User(
-        val name : String = "",
-        val balance: Int = 0,
-        val tabs: String = ""
-    )
-
-
     /**
      * recieves a tab, then sends out requests for payment from each user in the tab, and registers
      * the tab for payment on the server with it's amount.
@@ -62,9 +45,48 @@ class TransactionHandler {
         Log.i(TAG, "adding new element")
         tabsReference.child(id).setValue(tab)
 
+        addTabToOwner(owner, id)
+
         // TODO send out a request for payment to each user
 
         return id;
+    }
+
+    /**
+     * adds the tabId to the tab owners ownedTabs string
+     */
+    private fun addTabToOwner(owner: String, tabId: String){
+        val database = FirebaseDatabase.getInstance()
+        val userReference = database.getReference("Users")
+        val converterReference = database.getReference("emailToUid")
+        val email = owner.replace('.', '^')
+
+        //this first listener is to get the uid from the email using the EmailToUid database
+        converterReference.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val uid = snapshot.child(email).getValue<String>().toString()
+
+                //this second listener uses the UID to find the owner in the database, get their
+                //current list of owned tabs, and append the new tab to the end of that list
+                userReference.child(uid).addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val curTabs = snapshot.child("ownedTabs").getValue<String>().toString()
+                        val newTabs = "$curTabs,$tabId"
+
+                        //saves the new owned tab string to the owner
+                        userReference.child(uid).child("ownedTabs").setValue(newTabs)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.i(TAG, "error")
+                    }
+                })
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(TAG, "Error")
+            }
+        })
     }
 
     /**
@@ -87,7 +109,7 @@ class TransactionHandler {
                 val exists = snapshot.child(uid).exists()
                 //if the user is not already in the database, add them to it
                 if(!exists) {
-                    val newUser = email?.let { User(it,0, "") }
+                    val newUser = email?.let { User(it,0, "", "") }
                     userRef.child(uid).setValue(newUser)
                 } else{
                     Log.i(TAG, "user already exists in table")
