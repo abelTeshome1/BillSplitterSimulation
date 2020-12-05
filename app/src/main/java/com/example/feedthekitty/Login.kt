@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.SignInMethodQueryResult
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.util.ArrayList
 
 
 class Login : AppCompatActivity() {
@@ -34,6 +35,7 @@ class Login : AppCompatActivity() {
 
         loginBtn!!.setOnClickListener { loginUserAccount() }
     }
+
 
     private fun loginUserAccount() {
 
@@ -60,12 +62,23 @@ class Login : AppCompatActivity() {
             }
         }else{
 
+<<<<<<< HEAD
             Toast.makeText(
                 applicationContext,
                 "Invalid Credentials",
                 Toast.LENGTH_LONG
             ).show()
 
+=======
+        mAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if(task.isSuccessful){
+                val transactionHandler = TransactionHandler()
+                transactionHandler.addUserToDatabase()
+                intent.putExtra(USER_ID, mAuth!!.uid)
+                intent.putExtra(USER_EMAIL, emailView.toString())
+                startActivity(intent)
+            }
+>>>>>>> 2bfe84ab250d3d54a3b5471946d2d3534602645a
         }
 
 
@@ -82,5 +95,6 @@ class Login : AppCompatActivity() {
     companion object {
         const val USER_EMAIL = "useremail"
         const val USER_ID = "userid"
+        val TAG = "FTK"
     }
 }

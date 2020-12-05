@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -91,3 +92,91 @@
 
 
 </LinearLayout>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <TextView
+
+        android:id="@+id/login_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp"
+        android:textStyle="italic" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="360dp"
+        android:layout_height="187dp"
+        app:cardBackgroundColor="@android:color/transparent"
+
+        android:layout_gravity="center">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:gravity="center"
+            android:text="Log in to FeedTheKitty"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:inputType="textPassword"
+
+            android:background="@drawable/border"
+
+
+            android:hint="Password"
+
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="352dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+
+            android:layout_gravity="center"
+            android:background="@drawable/border"
+
+
+            android:hint="Email"
+
+            android:textColor="#000000" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_gravity="center"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Login" />
+
+
+</LinearLayout>
+>>>>>>> 2bfe84ab250d3d54a3b5471946d2d3534602645a
