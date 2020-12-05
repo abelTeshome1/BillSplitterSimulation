@@ -32,7 +32,6 @@ class DashBoard : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
-
         val welcomeView = findViewById<TextView>(R.id.welcome)
         welcomeView.text = "Hello, " + mAuth!!.currentUser?.email.toString()
 
@@ -41,8 +40,6 @@ class DashBoard : AppCompatActivity() {
 
         val button : Button = findViewById(R.id.button1)
         button.setOnClickListener { addUser() }
-
-
 
     }
 
@@ -93,7 +90,7 @@ class DashBoard : AppCompatActivity() {
                         val view: TextView = TextView(this)
 
                         view.text = enteredUser
-                        view.setTextColor(Color.parseColor("#000000"))
+                        view.setTextColor(Color.parseColor("#FFFFFF"))
                         view.gravity = Gravity.CENTER;
                         view.textSize = 15F
 
@@ -102,7 +99,6 @@ class DashBoard : AppCompatActivity() {
                             .show()
                     }
                 })
-
 
             // clear text
             findViewById<AutoCompleteTextView>(R.id.add_user)!!.text.clear()
