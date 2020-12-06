@@ -25,18 +25,22 @@
 
     <AutoCompleteTextView
         android:id="@+id/add_user"
-        android:layout_width="287dp"
+        android:layout_width="269dp"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-
         android:layout_above="@+id/textView"
+
         android:layout_alignParentStart="true"
         android:layout_marginStart="11dp"
         android:layout_marginBottom="24dp"
+
         android:completionHint="Enter Users"
         android:completionThreshold="1"
         android:hint="Enter User"
+        android:lines="1"
         android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+
         android:textColorHint="#FFFFFF"></AutoCompleteTextView>
 
     <EditText
@@ -52,6 +56,8 @@
         android:layout_weight="1"
         android:hint="Event Name"
         android:maxLines="1"
+        android:singleLine="true"
+        android:lines="1"
         android:textColorHint="#FFFFFF"></EditText>
 
     <EditText
@@ -60,6 +66,9 @@
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
 
+        android:maxLines="1"
+        android:singleLine="true"
+        android:lines="1"
 
         android:layout_alignTop="@+id/button1"
         android:layout_alignParentStart="true"
@@ -78,9 +87,10 @@
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
 
+
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="98dp"
-        android:background="@drawable/border"
+        android:background="@drawable/border2"
         android:isScrollContainer="false"
         android:orientation="horizontal">
 
@@ -97,7 +107,7 @@
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="99dp"
+        android:layout_width="104dp"
         android:layout_height="wrap_content"
 
         android:layout_alignParentEnd="true"
@@ -105,8 +115,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="3dp"
         android:layout_marginTop="317dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="366dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="368dp"
         android:layout_toEndOf="@+id/add_user"
         android:text="Add User" />
 
@@ -128,17 +138,19 @@
         android:id="@+id/welcome"
         android:layout_width="373dp"
         android:layout_height="58dp"
-
-
         android:layout_alignParentStart="true"
 
 
         android:layout_alignParentTop="true"
+
+
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="28dp"
+
+        android:layout_marginStart="17dp"
         android:layout_marginTop="46dp"
-        android:layout_marginEnd="9dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
         android:textColor="#FFFFFF"
         android:textSize="22dp" />
 

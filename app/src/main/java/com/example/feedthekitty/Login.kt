@@ -44,8 +44,32 @@ class Login : AppCompatActivity() {
         val email = emailView?.text.toString()
         val password = passView?.text.toString()
 
-        val intent = Intent(this, DashBoard::class.java)
+        if(Validators().validEmail(email) && Validators().validEmail(email)){
+            mAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                if(task.isSuccessful){
 
+                    val intent = Intent(this, DashBoard::class.java)
+                    intent.putExtra(USER_ID, mAuth!!.uid)
+                    intent.putExtra(USER_EMAIL, emailView.toString())
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(
+                        applicationContext,
+                        "Incorrect username or password",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }else{
+
+<<<<<<< HEAD
+            Toast.makeText(
+                applicationContext,
+                "Invalid Credentials",
+                Toast.LENGTH_LONG
+            ).show()
+
+=======
         mAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if(task.isSuccessful){
                 val transactionHandler = TransactionHandler()
@@ -54,7 +78,11 @@ class Login : AppCompatActivity() {
                 intent.putExtra(USER_EMAIL, emailView.toString())
                 startActivity(intent)
             }
+>>>>>>> 2bfe84ab250d3d54a3b5471946d2d3534602645a
         }
+
+
+
     }
 
 
