@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
@@ -9,13 +8,12 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-
     <TextView
 
         android:id="@+id/login_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:baselineAligned="false"
         android:gravity="center"
         android:text="@string/app_name"
@@ -26,7 +24,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="360dp"
-        android:layout_height="187dp"
+        android:layout_height="180dp"
         app:cardBackgroundColor="@android:color/transparent"
 
         android:layout_gravity="center">
@@ -44,30 +42,38 @@
 
         <EditText
             android:id="@+id/password"
-            android:layout_width="350dp"
+            android:layout_width="317dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:inputType="textPassword"
-
+            android:layout_marginTop="40dp"
             android:background="@drawable/border"
 
-
             android:hint="Password"
+            android:inputType="textPassword"
+            android:text= "pikapika"
+            android:lines="1"
+
+            android:maxLines="1"
+
+            android:singleLine="true"
 
             android:textColor="#000000" />
 
         <EditText
             android:id="@+id/email"
-            android:layout_width="352dp"
+            android:layout_width="317dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-
             android:layout_gravity="center"
+
+            android:layout_marginBottom="20dp"
             android:background="@drawable/border"
 
-
             android:hint="Email"
+            android:text= "iabespade@gmail.com"
+            android:lines="1"
+            android:maxLines="1"
+
+            android:singleLine="true"
 
             android:textColor="#000000" />
 
@@ -76,11 +82,12 @@
 
     <Button
         android:id="@+id/login"
-        android:layout_gravity="center"
-        android:layout_width="370dp"
+        android:layout_width="354dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:text="Login" />
 
 
 </LinearLayout>
+

@@ -1,22 +1,17 @@
 package com.example.feedthekitty
 
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.Tasks
+import android.widget.ScrollView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
-import java.util.concurrent.Semaphore
 
 
 class TransactionHandler {
 
     private var mAuth: FirebaseAuth? = null
     private lateinit var tabsReference: DatabaseReference
-    
+
     /**
      * recieves a tab, then sends out requests for payment from each user in the tab, and registers
      * the tab for payment on the server with it's amount.
@@ -26,7 +21,7 @@ class TransactionHandler {
      * Returns: the unique String tab id for this tab, if any of the fields are null it instead returns an
      * empty string
      **/
-    fun sendTab( users: ArrayList<String>, owner: String, amount: Int, description: String ) : String{
+    fun sendTab( users: ArrayList<String>, owner: String, amount: String,event : String, description: String) : String{
         if(users == null || owner == null || amount == null)
             return ""
         //test()
@@ -36,6 +31,8 @@ class TransactionHandler {
 
         val iter = users.iterator()
         var userString = ""
+
+        // iterate through users in list to create a string of users
         while(iter.hasNext()){
             val cur = iter.next()
             userString += "$cur,"
@@ -43,11 +40,14 @@ class TransactionHandler {
             addToTab(cur, id)
         }
         userString = userString.substring(0, userString.length - 1)
-        val tab = Tab(owner, userString, "", amount, 0, true, description);
+
+        val tab = Tab(event,owner, userString, "", amount, "0.00", true, description);
+
         Log.i(TAG, "adding new element")
         tabsReference.child(id).setValue(tab)
 
         addTabToOwner(owner, id)
+
 
         // TODO send out a request for payment to each user
 
@@ -61,6 +61,8 @@ class TransactionHandler {
         val database = FirebaseDatabase.getInstance()
         val userReference = database.getReference("Users")
         val converterReference = database.getReference("emailToUid")
+
+        //
         val email = owner.replace('.', '^')
 
         //this first listener is to get the uid from the email using the EmailToUid database
@@ -111,7 +113,7 @@ class TransactionHandler {
                 val exists = snapshot.child(uid).exists()
                 //if the user is not already in the database, add them to it
                 if(!exists) {
-                    val newUser = email?.let { User(it,0, "", "") }
+                    val newUser = email?.let { User(it,"1000.00", "", "") }
                     userRef.child(uid).setValue(newUser)
                 } else{
                     Log.i(TAG, "user already exists in table")
@@ -140,6 +142,8 @@ class TransactionHandler {
         val newEmail = email.replace('.','^')
         converterRef.child(newEmail).setValue(uid)
     }
+
+    // adds all users to tab
     private fun addToTab(user: String, tabId: String){
         val database = FirebaseDatabase.getInstance()
         val userRef = database.getReference("Users")
@@ -234,8 +238,9 @@ class TransactionHandler {
      */
     //this function should not be called here.  listeners should be set up in the dashboard page
 //    fun refreshPayments(user: String, tabId: Int) : Boolean {
-//
-//        return true;
+//        mAuth = FirebaseAuth.getInstance()
+//        mAuth.
+//        if()
 //    }
 
     companion object {
@@ -248,6 +253,6 @@ class TransactionHandler {
         userArrayList.add("one@gmail.com")
         userArrayList.add("two@gmail.com")
         userArrayList.add("three@gmail.com")
-        sendTab(userArrayList, "owner@gmail.com", 5, "test")
+        //sendTab(userArrayList, "owner@gmail.com", "5.00")
     }
 }

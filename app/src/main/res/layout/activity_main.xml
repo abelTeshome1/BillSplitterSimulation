@@ -10,33 +10,25 @@
     android:fitsSystemWindows="true"
     >
 
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/recyclerview"-->
-    <!--        class="androidx.appcompat.app.AlertController$RecycleListView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="284dp"-->
-    <!--        android:layout_alignParentStart="true"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        android:layout_marginStart="0dp"-->
-    <!--        android:layout_marginBottom="-15dp">-->
-
-    <!--    </androidx.recyclerview.widget.RecyclerView>-->
-
 
     <AutoCompleteTextView
         android:id="@+id/add_user"
-        android:layout_width="287dp"
+        android:layout_width="269dp"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-
         android:layout_above="@+id/textView"
+
         android:layout_alignParentStart="true"
         android:layout_marginStart="11dp"
         android:layout_marginBottom="24dp"
+
         android:completionHint="Enter Users"
         android:completionThreshold="1"
         android:hint="Enter User"
+        android:lines="1"
         android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+
         android:textColorHint="#FFFFFF"></AutoCompleteTextView>
 
     <EditText
@@ -52,24 +44,28 @@
         android:layout_weight="1"
         android:hint="Event Name"
         android:maxLines="1"
+        android:singleLine="true"
+        android:lines="1"
         android:textColorHint="#FFFFFF"></EditText>
 
     <EditText
         android:id="@+id/price"
         android:layout_width="165dp"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-
-
-        android:layout_alignTop="@+id/button1"
         android:layout_alignParentStart="true"
+
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="214dp"
+
         android:layout_marginTop="-59dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="427dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="426dp"
         android:hint="$ Price Total "
+        android:lines="1"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"></EditText>
 
     <ScrollView
@@ -78,9 +74,10 @@
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
 
+
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="98dp"
-        android:background="@drawable/border"
+        android:background="@drawable/border2"
         android:isScrollContainer="false"
         android:orientation="horizontal">
 
@@ -96,8 +93,8 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="99dp"
+        android:id="@+id/buttonAddUser"
+        android:layout_width="104dp"
         android:layout_height="wrap_content"
 
         android:layout_alignParentEnd="true"
@@ -105,8 +102,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="3dp"
         android:layout_marginTop="317dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="366dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="368dp"
         android:layout_toEndOf="@+id/add_user"
         android:text="Add User" />
 
@@ -128,22 +125,24 @@
         android:id="@+id/welcome"
         android:layout_width="373dp"
         android:layout_height="58dp"
-
-
         android:layout_alignParentStart="true"
 
 
         android:layout_alignParentTop="true"
+
+
         android:layout_alignParentEnd="true"
+
         android:layout_centerInParent="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginEnd="9dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
         android:textColor="#FFFFFF"
         android:textSize="22dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonCreateTab"
         android:layout_width="148dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/userLayout"
@@ -155,16 +154,39 @@
         android:text="Create New Tab"
         android:textSize="15dp" />
 
-    <Button
-        android:id="@+id/button"
+    <TextView
+        android:id="@+id/balance"
+        android:layout_width="285dp"
+        android:layout_height="52dp"
 
-        android:layout_width="156dp"
-        android:layout_height="56dp"
-
-
-        android:layout_above="@+id/event"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18dp"
-        android:text="View Previous Tabs" />
+
+
+        android:layout_marginTop="59dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/buttonYourTabs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="128dp"
+        android:text="Your Tabs" />
+
+    <Button
+        android:id="@+id/buttonPaymentTabs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="79dp"
+        android:text="Payment Tabs" />
 
 </RelativeLayout>
