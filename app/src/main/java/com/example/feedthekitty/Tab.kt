@@ -6,5 +6,6 @@ data class Tab(
     val paidUsers: String = "",
     val totalRequested: Int = 0,
     val balance: Int = 0,
-    val open: Boolean = true
+    val open: Boolean = true,
+    val description: String = ""
 )

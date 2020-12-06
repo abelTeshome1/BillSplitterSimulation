@@ -2,19 +2,21 @@ package com.example.feedthekitty
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import java.util.concurrent.Semaphore
 
 
 class TransactionHandler {
 
     private var mAuth: FirebaseAuth? = null
     private lateinit var tabsReference: DatabaseReference
-
+    
     /**
      * recieves a tab, then sends out requests for payment from each user in the tab, and registers
      * the tab for payment on the server with it's amount.
@@ -24,7 +26,7 @@ class TransactionHandler {
      * Returns: the unique String tab id for this tab, if any of the fields are null it instead returns an
      * empty string
      **/
-    fun sendTab( users: ArrayList<String>, owner: String, amount: Int ) : String{
+    fun sendTab( users: ArrayList<String>, owner: String, amount: Int, description: String ) : String{
         if(users == null || owner == null || amount == null)
             return ""
         //test()
@@ -41,7 +43,7 @@ class TransactionHandler {
             addToTab(cur, id)
         }
         userString = userString.substring(0, userString.length - 1)
-        val tab = Tab(owner, userString, "", amount, 0, true);
+        val tab = Tab(owner, userString, "", amount, 0, true, description);
         Log.i(TAG, "adding new element")
         tabsReference.child(id).setValue(tab)
 
@@ -246,6 +248,6 @@ class TransactionHandler {
         userArrayList.add("one@gmail.com")
         userArrayList.add("two@gmail.com")
         userArrayList.add("three@gmail.com")
-        sendTab(userArrayList, "owner@gmail.com", 5)
+        sendTab(userArrayList, "owner@gmail.com", 5, "test")
     }
 }
