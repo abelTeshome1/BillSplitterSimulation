@@ -178,6 +178,8 @@ class DashBoard : AppCompatActivity() {
             priceString,
             eventString, descriptionString
         )
+        //closes the activity and goes back to the selection page after the tab has been created
+        finish()
 
     }
 
@@ -189,6 +191,12 @@ class DashBoard : AppCompatActivity() {
 
         try {
             val intgr: Double = strNum.toDouble()
+            if(intgr == 0.0){
+                Toast.makeText(applicationContext, "Amount asked for cannot be 0",
+                    Toast.LENGTH_SHORT).show()
+                return false
+            }
+
         }catch (e: NumberFormatException){
 
             return false

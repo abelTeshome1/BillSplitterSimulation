@@ -240,6 +240,9 @@ class TransactionHandler {
         val TAG = "FTK"
     }
 
+    /**
+     * tests the database by creating a small tab, used for debugging purposes
+     */
     fun testDatabase() : String{
         val userArrayList = ArrayList<String>()
         userArrayList.add("bob@gmail.com")
