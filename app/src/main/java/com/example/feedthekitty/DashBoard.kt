@@ -49,23 +49,6 @@ class DashBoard : AppCompatActivity() {
             val intent = Intent(this, DashBoard::class.java)
             startActivity(intent)
         }
-
-        findViewById<TextView>(R.id.welcome).setOnClickListener(){
-            val id = TransactionHandler().testDatabase()
-            Log.i(TransactionHandler.TAG, "starting test")
-            val intent = Intent(applicationContext, TabDetailActivity::class.java)
-            intent.putExtra("balance", "0")
-            intent.putExtra("eventName", "Test")
-            intent.putExtra("description", "oh god i don;t remember")
-            intent.putExtra("paidUsers", "")
-            intent.putExtra("users", "bob@gmail.com,joe@gmail.com,steve@gmail.com,adam@gmail.com")
-            intent.putExtra("totalRequested", "20")
-            intent.putExtra("owner", "owner@gmail.com")
-            intent.putExtra("tabId", id)
-            intent.putExtra("open", true)
-            Log.i(TransactionHandler.TAG, "created intent")
-            startActivity(intent)
-        }
     }
 
 
