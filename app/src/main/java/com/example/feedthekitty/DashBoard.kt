@@ -16,14 +16,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-import java.util.*
-
 
 class DashBoard : AppCompatActivity() {
 
     //hold arraylist of added users in tab
     private var usersTab = ArrayList<String>()
     private var mAuth: FirebaseAuth? = null
+
+    private var  allUsers =  ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,25 +32,16 @@ class DashBoard : AppCompatActivity() {
 
         welcome()
 
+        listUsers()
+
         val addUser : Button = findViewById(R.id.buttonAddUser)
         addUser.setOnClickListener { addUser() }
 
         val createTab : Button = findViewById(R.id.buttonCreateTab)
         createTab.setOnClickListener { createTab() }
 
-        val yourTabs : Button = findViewById(R.id.buttonYourTabs)
-        yourTabs.setOnClickListener {
-            val intent = Intent(this, DashBoard::class.java)
-            startActivity(intent)
-        }
 
-        val paymentTabs : Button = findViewById(R.id.buttonPaymentTabs)
-        paymentTabs.setOnClickListener {
-            val intent = Intent(this, DashBoard::class.java)
-            startActivity(intent)
-        }
     }
-
 
     private fun addUser(){
 
@@ -62,16 +53,16 @@ class DashBoard : AppCompatActivity() {
             Toast.makeText(
                 applicationContext,
                 "Enter a User",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
 
-        //invalid user
+            //invalid user
         }else if(!Validators().validEmail(enteredUser)){
 
             Toast.makeText(
                 applicationContext,
                 "Invalid User",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
 
         }else{
@@ -83,13 +74,13 @@ class DashBoard : AppCompatActivity() {
                     Toast.makeText(
                         applicationContext,
                         "That user is not registered",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                 } else if (usersTab.contains(enteredUser)) {
                     Toast.makeText(
                         applicationContext,
                         "User is already included",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                 } else {
 
@@ -114,22 +105,23 @@ class DashBoard : AppCompatActivity() {
 
         }
 
-
     }
 
     private fun createTab(){
         val price = findViewById<EditText>(R.id.price)
         val event = findViewById<EditText>(R.id.event)
+        val description = findViewById<EditText>(R.id.description)
 
         val priceString = price.text.toString()
         val eventString = event.text.toString()
+        val descriptionString = description.text.toString()
 
 
         if( (priceString == null || priceString == "") || (eventString == null || eventString== "") ){
             Toast.makeText(
                 applicationContext,
                 "Fill out Price and Event Fields",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
             return
         }
@@ -138,19 +130,19 @@ class DashBoard : AppCompatActivity() {
             Toast.makeText(
                 applicationContext,
                 "Invalid Price",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
 
             return
         }
 
         if(priceString.contains('.') ){
-           val cents =  priceString.substringAfter('.')
+            val cents =  priceString.substringAfter('.')
             if(cents.length > 2){
                 Toast.makeText(
                     applicationContext,
                     "Invalid Price",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
                 return
             }
@@ -161,7 +153,7 @@ class DashBoard : AppCompatActivity() {
             Toast.makeText(
                 applicationContext,
                 "No Users in Tab",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
 
             return
@@ -170,8 +162,8 @@ class DashBoard : AppCompatActivity() {
 
         findViewById<EditText>(R.id.price).text.clear()
         findViewById<EditText>(R.id.event).text.clear()
+        findViewById<EditText>(R.id.description).text.clear()
         findViewById<LinearLayout>(R.id.linear).removeAllViews()
-
 
         Toast.makeText(
             applicationContext,
@@ -184,8 +176,7 @@ class DashBoard : AppCompatActivity() {
             usersTab,
             mAuth?.currentUser?.email.toString(),
             priceString,
-            eventString,
-            ""
+            eventString, descriptionString
         )
 
     }
@@ -193,7 +184,7 @@ class DashBoard : AppCompatActivity() {
 
     private fun isNumeric(strNum: String): Boolean {
         if (strNum == null) {
-           return false
+            return false
         }
 
         try {
@@ -208,8 +199,8 @@ class DashBoard : AppCompatActivity() {
     }
 
     private fun welcome(){
-        val welcomeView = findViewById<TextView>(R.id.welcome)
-        welcomeView.text = "Hello, " + mAuth!!.currentUser?.email.toString()
+        // val welcomeView = findViewById<TextView>(R.id.welcome)
+       //  welcomeView.text = "Hello, " + mAuth!!.currentUser?.email.toString()
 
         val textView = findViewById<TextView>(R.id.textView)
 
@@ -248,45 +239,37 @@ class DashBoard : AppCompatActivity() {
 
     }
 
+    private fun listUsers(){
 
+        val database = FirebaseDatabase.getInstance()
+        val userReference = database.getReference("emailToUid")
 
+        userReference.addListenerForSingleValueEvent(object : ValueEventListener {
 
-    private fun autoCompleteUser(){
+            override fun onDataChange(snapshot: DataSnapshot) {
 
-       // val view = findViewById<AutoCompleteTextView>(R.id.add_user)
+                for (i in snapshot.children) {
 
-        //  mAuth!!.currentUser?.email
+                    val newEmail = i.key.toString().replace('^', '.')
+                    allUsers.add(newEmail)
 
-//        val database = FirebaseDatabase.getInstance().reference
+                }
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(TransactionHandler.TAG, "error")
+            }
+        })
 
-
-        //Child the root before all the push() keys are found and add a ValueEventListener()
-//        database.child("Users").addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                Log.d("test","hello");
-//                //Basically, this says "For each DataSnapshot *Data* in dataSnapshot, do what's inside the method.
-//                for (suggestionSnapshot in dataSnapshot.children) {
-//
-//                    val suggestion = suggestionSnapshot.child("suggestion").getValue(
-//                        String::class.java
-//                    )!!
-//                    //Add the retrieved string to the list
-//
-//                    Toast.makeText(applicationContext, suggestion, Toast.LENGTH_LONG).show()
-//                    val autoComplete = ArrayAdapter<String>(this@DashBoard, android.R.layout.simple_list_item_1)
-//                    autoComplete.add(suggestion)
-//                }
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {}
-//        })
-//        val ACTV = findViewById<AutoCompleteTextView>(R.id.add_user)
-//        ACTV.setAdapter(autoComplete)
+        // uses adapter predict entered users in database
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_dropdown_item_1line, allUsers
+        )
+        val textView = findViewById(R.id.add_user) as AutoCompleteTextView
+        textView.setAdapter(adapter)
 
     }
-
-
 
 
 }

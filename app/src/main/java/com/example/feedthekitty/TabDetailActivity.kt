@@ -37,7 +37,6 @@ class TabDetailActivity : AppCompatActivity(){
     private lateinit var amountContributed: String
     private var open: Boolean = false
 
-
     private lateinit var paymentButton: Button
     private lateinit var balanceView: TextView
     private lateinit var requestedView: TextView
@@ -49,10 +48,7 @@ class TabDetailActivity : AppCompatActivity(){
     private lateinit var listView: ListView
     private lateinit var closeTabButton: Button
 
-
-
     internal lateinit var mAdapter: UserListAdapter
-
 
 
     override fun onCreate(savedInstanceState: Bundle?){
