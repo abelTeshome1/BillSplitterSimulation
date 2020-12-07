@@ -19,9 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login"/>
+        <activity android:name=".TabDetailActivity"/>
         <activity android:name=".DashBoard"
             android:windowSoftInputMode="adjustPan"
-            ></activity>
+            ></activity>z
     </application>
 
 </manifest>
