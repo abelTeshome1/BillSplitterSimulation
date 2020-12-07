@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:text="email"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:id="@+id/checkmarkImage"
+        android:layout_width="45dp"
+        android:layout_height="29dp"
+        android:layout_alignBottom="@id/userName"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentBottom="false"
+        android:layout_marginLeft="-1dp"
+        android:layout_toRightOf="@id/userName"
+        app:srcCompat="@drawable/green_checkmark" />
+
+    <TextView
+        android:id="@+id/amountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/checkmarkImage"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/checkmarkImage"
+        android:text="Amount: "
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/amountView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/checkmarkImage"
+        android:layout_toRightOf="@id/amountText"
+        android:text="0"
+        android:textSize="20dp" />
+</RelativeLayout>

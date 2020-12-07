@@ -1,7 +1,9 @@
 package com.example.feedthekitty
 
+import android.content.Intent
 import android.util.Log
 import android.widget.ScrollView
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
@@ -205,15 +207,15 @@ class TransactionHandler {
         tabReference.child(tabId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 //this line is what actually grabs the balance
-                val payout = snapshot.child("balance").getValue<Int>()
+                val payout = snapshot.child("balance").getValue<String>().toString()
                 //this second listener gets the current balance of the owner
                 userReference.child(ownerId).child("balance").addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        val currentBalance = snapshot.getValue<Int>()
-                        val newBalance = payout?.let { currentBalance?.plus(it) }
+                        val currentBalance = snapshot.getValue<String>().toString()
+                        val newBalance = payout.toFloat() + currentBalance.toFloat()
                         //adds the new balance to the current balance and then saves it in the
                         //database, then closes the tab
-                        userReference.child(ownerId).child("balance").setValue(newBalance)
+                        userReference.child(ownerId).child("balance").setValue(newBalance.toString())
                         tabReference.child(tabId).child("open").setValue(false)
                     }
 
@@ -247,12 +249,16 @@ class TransactionHandler {
         val TAG = "FTK"
     }
 
-    fun testDatabase(){
+    fun testDatabase() : String{
         val userArrayList = ArrayList<String>()
+        userArrayList.add("bob@gmail.com")
+        userArrayList.add("joe@gmail.com")
+        userArrayList.add("steve@gmail.com")
+        userArrayList.add("adam@gmail.com")
+        val description = "This is a test, at the start of it no one as contributed anything"
+        val id = sendTab(userArrayList,"owner@gmail.com","20","Test","")
 
-        userArrayList.add("one@gmail.com")
-        userArrayList.add("two@gmail.com")
-        userArrayList.add("three@gmail.com")
+        return id
         //sendTab(userArrayList, "owner@gmail.com", "5.00")
     }
 }

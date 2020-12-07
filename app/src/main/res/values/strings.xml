@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Feed The Kitty</string>
+    <string name="paymentHint">$0.00</string>
 </resources>
