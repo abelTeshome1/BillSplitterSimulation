@@ -40,17 +40,6 @@ class DashBoard : AppCompatActivity() {
         val createTab : Button = findViewById(R.id.buttonCreateTab)
         createTab.setOnClickListener { createTab() }
 
-        val yourTabs : Button = findViewById(R.id.buttonYourTabs)
-        yourTabs.setOnClickListener {
-            val intent = Intent(this, DashBoard::class.java)
-            startActivity(intent)
-        }
-
-        val paymentTabs : Button = findViewById(R.id.buttonPaymentTabs)
-        paymentTabs.setOnClickListener {
-            val intent = Intent(this, DashBoard::class.java)
-            startActivity(intent)
-        }
 
     }
 

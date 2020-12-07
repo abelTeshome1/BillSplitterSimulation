@@ -15,20 +15,19 @@
         android:id="@+id/add_user"
         android:layout_width="269dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView"
 
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
+        android:layout_alignParentTop="true"
 
-        android:layout_marginBottom="6dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="261dp"
         android:completionHint="Enter Users"
         android:completionThreshold="1"
         android:hint="Enter User"
         android:lines="1"
+
         android:maxLines="1"
         android:singleLine="true"
-
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"></AutoCompleteTextView>
 
@@ -39,8 +38,8 @@
 
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="126dp"
         android:layout_weight="1"
         android:hint="Event Name"
         android:lines="1"
@@ -56,8 +55,8 @@
 
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="170dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginTop="126dp"
+        android:layout_marginEnd="15dp"
         android:hint="$ Price Total "
         android:lines="1"
         android:maxLines="1"
@@ -94,14 +93,11 @@
         android:layout_width="109dp"
         android:layout_height="38dp"
 
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="317dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="268dp"
         android:layout_marginEnd="17dp"
-        android:layout_marginBottom="352dp"
         android:layout_toEndOf="@+id/add_user"
         android:text="Add User" />
 
@@ -167,38 +163,18 @@
         android:textColor="#FFFFFF"
         android:textSize="16dp" />
 
-    <Button
-        android:id="@+id/buttonYourTabs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="113dp"
-        android:text="Your Tabs" />
-
-    <Button
-        android:id="@+id/buttonPaymentTabs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="113dp"
-        android:layout_marginEnd="80dp"
-        android:text="Payment Tabs" />
-
     <EditText
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="42dp"
+        android:layout_below="@+id/event"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
 
-        android:layout_marginTop="218dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="21dp"
         android:hint="Description"
         android:lines="1"
         android:maxLines="1"
