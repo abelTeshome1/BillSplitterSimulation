@@ -53,7 +53,7 @@ class DashBoard : AppCompatActivity() {
             Toast.makeText(
                 applicationContext,
                 "Enter a User",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
 
             //invalid user
@@ -62,7 +62,7 @@ class DashBoard : AppCompatActivity() {
             Toast.makeText(
                 applicationContext,
                 "Invalid User",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
 
         }else{
@@ -74,13 +74,13 @@ class DashBoard : AppCompatActivity() {
                     Toast.makeText(
                         applicationContext,
                         "That user is not registered",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                 } else if (usersTab.contains(enteredUser)) {
                     Toast.makeText(
                         applicationContext,
                         "User is already included",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                 } else {
 
@@ -121,7 +121,7 @@ class DashBoard : AppCompatActivity() {
             Toast.makeText(
                 applicationContext,
                 "Fill out Price and Event Fields",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
             return
         }
@@ -130,7 +130,7 @@ class DashBoard : AppCompatActivity() {
             Toast.makeText(
                 applicationContext,
                 "Invalid Price",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
 
             return
@@ -142,7 +142,7 @@ class DashBoard : AppCompatActivity() {
                 Toast.makeText(
                     applicationContext,
                     "Invalid Price",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
                 return
             }
@@ -153,7 +153,7 @@ class DashBoard : AppCompatActivity() {
             Toast.makeText(
                 applicationContext,
                 "No Users in Tab",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
 
             return
@@ -199,8 +199,8 @@ class DashBoard : AppCompatActivity() {
     }
 
     private fun welcome(){
-        val welcomeView = findViewById<TextView>(R.id.welcome)
-        welcomeView.text = "Hello, " + mAuth!!.currentUser?.email.toString()
+        // val welcomeView = findViewById<TextView>(R.id.welcome)
+       //  welcomeView.text = "Hello, " + mAuth!!.currentUser?.email.toString()
 
         val textView = findViewById<TextView>(R.id.textView)
 
