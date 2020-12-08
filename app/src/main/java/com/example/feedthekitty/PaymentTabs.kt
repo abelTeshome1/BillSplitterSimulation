@@ -62,7 +62,7 @@ class PaymentTabs  : AppCompatActivity() {
         listView.adapter = ownedAdapter
 
         listView.onItemClickListener = AdapterView.OnItemClickListener{parent, view, position, id ->
-            val obj = ownedAdapter.getItem(position)
+            val obj = parent.adapter.getItem(position) as uidAndTab
             val intent = Intent(this, TabDetailActivity::class.java)
             intent.putExtra("eventName", obj.tab.eventName)
             intent.putExtra("owner", obj.tab.owner)
