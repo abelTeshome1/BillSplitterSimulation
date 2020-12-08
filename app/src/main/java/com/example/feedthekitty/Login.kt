@@ -43,13 +43,13 @@ class Login : AppCompatActivity() {
             mAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if(task.isSuccessful){
 
-                    val intent = Intent(this, StartScreen::class.java)
+                    val intent = Intent(this, PaymentTabs::class.java)
 
                     val transactionHandler = TransactionHandler()
                     transactionHandler.addUserToDatabase()
 
-                    intent.putExtra(USER_ID, mAuth!!.uid)
-                    intent.putExtra(USER_EMAIL, emailView.toString())
+//                    intent.putExtra(USER_ID, mAuth!!.uid)
+//                    intent.putExtra(USER_EMAIL, emailView.toString())
                     startActivity(intent)
                 }else{
                     Toast.makeText(

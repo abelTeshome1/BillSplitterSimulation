@@ -2,30 +2,19 @@ package com.example.feedthekitty
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.renderscript.Sampler
-import android.text.Html
-import android.text.Spannable
-import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
-import kotlinx.android.synthetic.main.activity_tab_detail.*
-import kotlinx.android.synthetic.main.login.*
-import org.w3c.dom.Text
 
 class TabDetailActivity : AppCompatActivity(){
 
@@ -53,6 +42,7 @@ class TabDetailActivity : AppCompatActivity(){
     private lateinit var listView: ListView
     private lateinit var closeTabButton: Button
     private lateinit var closedTextView: TextView
+    private lateinit var recommendedView: TextView
 
     internal lateinit var mAdapter: UserListAdapter
 
@@ -92,6 +82,8 @@ class TabDetailActivity : AppCompatActivity(){
         listView = findViewById(R.id.userListView)
         closeTabButton = findViewById(R.id.closeTabButton)
         closedTextView = findViewById(R.id.closedText)
+        recommendedView = findViewById(R.id.recommendedView)
+
 
         Log.i(TAG, "set up views")
 
@@ -163,6 +155,7 @@ class TabDetailActivity : AppCompatActivity(){
         paymentButton.visibility = View.GONE
         newContributionView.visibility = View.GONE
         contributeMoreText.visibility = View.GONE
+        recommendedView.visibility = View.GONE
         listView.visibility = View.VISIBLE
         //if the tab has been closed the close button should not appear
         if(open) {
@@ -268,10 +261,12 @@ class TabDetailActivity : AppCompatActivity(){
             paymentButton.visibility = View.VISIBLE
             contributeMoreText.text = "Contribute more?"
             newContributionView.visibility = View.VISIBLE
+            recommendedView.visibility = View.VISIBLE
         } else {
             paymentButton.visibility = View.INVISIBLE
             contributeMoreText.text = "This tab has been closed"
             newContributionView.visibility = View.INVISIBLE
+            recommendedView.visibility = View.INVISIBLE
         }
         contributeMoreText.visibility = View.VISIBLE
         amountContributedView.visibility = View.VISIBLE
@@ -281,6 +276,10 @@ class TabDetailActivity : AppCompatActivity(){
         val currentContribution = getCurrentUserContribution()
         val contributedText = "you have contributed $currentContribution to this fund."
         amountContributedView.text = contributedText
+        val numUsers = users.split(",").size.toFloat()
+        val recDonation = totalRequested.toFloat() / numUsers
+        recommendedView.text = "$$recDonation"
+
 
         setUpListeners()
     }

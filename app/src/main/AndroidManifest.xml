@@ -22,9 +22,10 @@
         <activity android:name=".TabDetailActivity"/>
         <activity android:name=".StartScreen"/>
         <activity android:name=".AddUserFundsActivity"/>
-        <activity android:name=".DashBoard"
-            android:windowSoftInputMode="adjustPan"
-            ></activity>
+        <activity
+            android:name=".DashBoard"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".PaymentTabs"/>
     </application>
 
 </manifest>
