@@ -39,6 +39,8 @@ class tabListViewAdapter (context: Context, resource: Int, objects: ArrayList<Pa
         storedViewHolder.uid = getItem(position).uid
         if(getItem(position).tab.open == false){
             storedViewHolder.closedView.text = "CLOSED"
+        } else{
+            storedViewHolder.closedView.text = ""
         }
         return newView
 
