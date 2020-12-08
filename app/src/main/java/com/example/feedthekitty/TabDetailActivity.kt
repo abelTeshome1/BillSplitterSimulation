@@ -266,13 +266,13 @@ class TabDetailActivity : AppCompatActivity(){
             contributeMoreText.text = "Contribute more?"
             newContributionView.visibility = View.VISIBLE
             recommendedView.visibility = View.VISIBLE
-            recommendedView.visibility = View.VISIBLE
+            recommendedText.visibility = View.VISIBLE
         } else {
             paymentButton.visibility = View.INVISIBLE
             contributeMoreText.text = "This tab has been closed"
             newContributionView.visibility = View.INVISIBLE
             recommendedView.visibility = View.INVISIBLE
-            recommendedView.visibility = View.INVISIBLE
+            recommendedText.visibility = View.INVISIBLE
         }
         contributeMoreText.visibility = View.VISIBLE
         amountContributedView.visibility = View.VISIBLE
