@@ -91,6 +91,14 @@ class PaymentTabs  : AppCompatActivity() {
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        ownedList.clear()
+        partOfList.clear()
+        retrieveOwnedTabs()
+        retrivePartOfTabs()
+    }
+
     private fun initializeViews(){
         ownedButton = findViewById<Button>(R.id.select_owned_tabs)
         tabsYouOweButton = findViewById<Button>(R.id.select_part_of_tabs)
