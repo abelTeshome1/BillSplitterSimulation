@@ -25,7 +25,7 @@ class Validators {
             return false
         }
 
-        val length = password?.length
+        val length = password.length
 
         return true
     }

@@ -232,6 +232,11 @@ class TabDetailActivity : AppCompatActivity(){
         })
 
     }
+
+    /**
+     * sets up the listeners for the owner so that the tab stays up to date with the database
+     * and automatically updates it's fields to keep current with the server
+     */
     private fun setUpOwnerListeners(){
         val database = FirebaseDatabase.getInstance()
         val tabReference = database.getReference("Tabs").child(tabId)
