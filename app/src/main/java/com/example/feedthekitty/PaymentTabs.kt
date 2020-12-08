@@ -36,6 +36,8 @@ class PaymentTabs  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.paymenttabs)
+
+        // Creating seperate adapters for the tabs the user owns and the ones they are a part of
         ownedAdapter = tabListViewAdapter(
             this,
             R.layout.tab_badge_view,
@@ -46,21 +48,21 @@ class PaymentTabs  : AppCompatActivity() {
             R.layout.tab_badge_view,
             partOfList
         )
+
         initializeViews()
 
         mAuth = FirebaseAuth.getInstance()
 
         user = mAuth!!.currentUser!!.email.toString()
+
+        //Getting the tabs from the firebase as well as updating the lists that use them
         synchronized(this) {
             retrieveOwnedTabs()
             retrivePartOfTabs()
         }
-
-
-
-
         listView.adapter = ownedAdapter
 
+        // Passing the details neccessary to process the tab to the TabDetailActivity
         listView.onItemClickListener = AdapterView.OnItemClickListener{parent, view, position, id ->
             val obj = parent.adapter.getItem(position) as uidAndTab
             val intent = Intent(this, TabDetailActivity::class.java)
@@ -77,12 +79,14 @@ class PaymentTabs  : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Changes the color of the button to show that it is selected and changing the adapter to show the tabs the user owns
         tabsYouOweButton.setOnClickListener(){
             listView.adapter = partOfAdapter
             tabsYouOweButton.setBackgroundColor(resources.getColor(R.color.selected))
             ownedButton.setBackgroundColor(resources.getColor(R.color.notSelected))
         }
 
+        // Changes the color of the button to show that it is selected and changing the adapter to show the tabs the user is a part of
         ownedButton.setOnClickListener(){
             listView.adapter = ownedAdapter
             tabsYouOweButton.setBackgroundColor(resources.getColor(R.color.notSelected))
@@ -91,6 +95,7 @@ class PaymentTabs  : AppCompatActivity() {
 
     }
 
+    // Resetting the lists and getting the data from the database in case the user updated the tab they selected
     override fun onRestart() {
         super.onRestart()
         ownedList.clear()
@@ -121,18 +126,23 @@ class PaymentTabs  : AppCompatActivity() {
         return true
     }
 
+    // Refreshing the owned adapter both after initial loading and if a
+    // change has been detected
     private fun refreshOwned(tab:Tab, i: String){
         Log.i(TAG, "Entered Owned")
         ownedList.add(uidAndTab(tab, i))
         ownedAdapter.notifyDataSetChanged()
     }
 
+    // Refreshing the partof adapter both after initial loading and if a
+    // change has been detected
     private fun refreshPartOf(tab:Tab, i:String){
         Log.i(TAG, "Entered Owned")
         partOfList.add(uidAndTab(tab, i))
         partOfAdapter.notifyDataSetChanged()
     }
 
+    //retrieving the owned tabs and latter calling refresh owned
     private fun retrieveOwnedTabs(){
         val database = FirebaseDatabase.getInstance()
         val userRef = database.getReference("Users")
@@ -143,65 +153,67 @@ class PaymentTabs  : AppCompatActivity() {
         val email = user.replace('.','^')
         Log.i(TAG, "did the prep work")
 
-        //this first listener gets the uid of user from their email
+        val uid = mAuth!!.currentUser!!.uid
+        //this listener gets the current list of tabs the user is in
+        // so that it can add the user to the new tab without erasing the old ones
+        userRef.child(uid).addValueEventListener( object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                tabs = snapshot.child("ownedTabs").getValue<String>().toString()
+                //saves the tab list to the user
+                val tabArray = tabs.split(",")
 
-                val uid = mAuth!!.currentUser!!.uid
-                //this second nested listener gets the current list of tabs the user is in
-                //so that it can add the user to the new tab without erasing the old ones
-                userRef.child(uid).addValueEventListener( object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        tabs = snapshot.child("ownedTabs").getValue<String>().toString()
-                        //saves the tab list to the user
-                        val tabArray = tabs.split(",")
+                for (i in tabArray){
+                    if(i != null) {
 
-                        for (i in tabArray){
-                            if(i != null) {
-                                tabReference.child(i)
-                                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                                        override fun onDataChange(snapshot: DataSnapshot) {
-                                            val open = snapshot.child("open")
-                                                .getValue<Boolean>().toString().toBoolean()
+                        // retrieving the tab with the uid i
+                        tabReference.child(i)
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    val open = snapshot.child("open")
+                                        .getValue<Boolean>().toString().toBoolean()
 
+                                    //retriving the values from the firebase and storing in a tab
+                                    val tab = Tab(
+                                        snapshot.child("eventName").getValue<String>()
+                                            .toString(),
+                                        snapshot.child("owner").getValue<String>()
+                                            .toString(),
+                                        snapshot.child("users").getValue<String>()
+                                            .toString(),
+                                        snapshot.child("paidUsers").getValue<String>()
+                                            .toString(),
+                                        snapshot.child("totalRequested").getValue<String>()
+                                            .toString(),
+                                        snapshot.child("balance").getValue<String>()
+                                            .toString(),
+                                        open,
+                                        snapshot.child("description").getValue<String>()
+                                            .toString()
+                                    )
 
-                                            val tab = Tab(
-                                                snapshot.child("eventName").getValue<String>()
-                                                    .toString(),
-                                                snapshot.child("owner").getValue<String>()
-                                                    .toString(),
-                                                snapshot.child("users").getValue<String>()
-                                                    .toString(),
-                                                snapshot.child("paidUsers").getValue<String>()
-                                                    .toString(),
-                                                snapshot.child("totalRequested").getValue<String>()
-                                                    .toString(),
-                                                snapshot.child("balance").getValue<String>()
-                                                    .toString(),
-                                                open,
-                                                snapshot.child("description").getValue<String>()
-                                                    .toString()
-                                            )
-
-                                            if (tab.balance != "null")
-                                                refreshOwned(tab, i)
-
-
-                                        }
-
-                                        override fun onCancelled(error: DatabaseError) {
-                                            Log.i(TransactionHandler.TAG, "error")
-                                        }
+                                    //refreshing the tab adapter in the effent a change was detected (null to prevent old prechange entries)
+                                    if (tab.balance != "null")
+                                        refreshOwned(tab, i)
 
 
-                                    })
-                            }
-                        }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    Log.i(TransactionHandler.TAG, "error")
+                                }
+
+
+                            })
                     }
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.i(TransactionHandler.TAG, "error")
-                    }
-                })
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(TransactionHandler.TAG, "error")
+            }
+        })
     }
 
+    //retrieving the tabs the user is part of and later updating the associated adapter
     private fun retrivePartOfTabs(){
         val database = FirebaseDatabase.getInstance()
         val userRef = database.getReference("Users")
@@ -215,7 +227,7 @@ class PaymentTabs  : AppCompatActivity() {
         //this first listener gets the uid of user from their email
 
         val uid = mAuth!!.currentUser!!.uid
-        //this second nested listener gets the current list of tabs the user is in
+        //this listener gets the current list of tabs the user is in
         //so that it can add the user to the new tab without erasing the old ones
         userRef.child(uid).addValueEventListener( object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -224,6 +236,7 @@ class PaymentTabs  : AppCompatActivity() {
                 val tabArray = tabs.split(",")
 
                 for (i in tabArray){
+                    // retrieveing the tab stored at uid i
                     if(i != null) {
                         tabReference.child(i)
                             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -234,9 +247,7 @@ class PaymentTabs  : AppCompatActivity() {
                                     if(openString != null)
                                         open = openString.toBoolean()
 
-                                    val test =
-                                        snapshot.child("eventName").getValue<String>()
-                                            .toString()
+                                    //creating the tab object that will be later used by the partof adapter
                                     val tab = Tab(
                                         snapshot.child("eventName").getValue<String>().toString(),
                                         snapshot.child("owner").getValue<String>().toString(),
@@ -265,14 +276,9 @@ class PaymentTabs  : AppCompatActivity() {
                 Log.i(TransactionHandler.TAG, "error")
             }
         })
-
-
-
-
-
-
-
     }
+
+    //wrapper to tie the uid for a tab and its data together
     class uidAndTab{
         lateinit var uid:String
         lateinit var tab:Tab

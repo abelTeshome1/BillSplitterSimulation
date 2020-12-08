@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 
 
-// Layout taken from class examples
+// Layout taken from class examples of listview custom adapters
 class tabListViewAdapter (context: Context, resource: Int, objects: ArrayList<PaymentTabs.uidAndTab>): ArrayAdapter<PaymentTabs.uidAndTab>(context, resource, objects){
 
     private var mLayoutInflater: LayoutInflater = LayoutInflater.from(context)
@@ -48,6 +48,8 @@ class tabListViewAdapter (context: Context, resource: Int, objects: ArrayList<Pa
         lateinit var nameView: TextView
         lateinit var closedView: TextView
         lateinit var valueView: TextView
+
+        // data that is used by the listeners attached to the list this is attached to
         lateinit var  tab: Tab
         lateinit var uid:String
     }

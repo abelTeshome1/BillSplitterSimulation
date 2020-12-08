@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
+// Guided by the class materials firebase lab
 class MainActivity : AppCompatActivity() {
 
     private var loginBtn: Button? = null
