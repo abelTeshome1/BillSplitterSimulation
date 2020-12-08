@@ -198,57 +198,51 @@ class TransactionHandler {
         val tabReference = database.getReference("Tabs")
         val userReference = database.getReference("Users")
         mAuth = FirebaseAuth.getInstance()
-        /*
-        this method can only be called by the owner of the tab it is closing, so it is safe to
-        use the id of the currently logged in user as the id for the owner
-         */
-        val ownerId = mAuth!!.currentUser!!.uid
         //this first listener gets the balance of the tab
+
         tabReference.child(tabId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                //this line is what actually grabs the balance
-                val payout = snapshot.child("balance").getValue<String>().toString()
-                //this second listener gets the current balance of the owner
-                userReference.child(ownerId).child("balance").addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val currentBalance = snapshot.getValue<String>().toString()
-                        val newBalance = payout.toFloat() + currentBalance.toFloat()
-                        //adds the new balance to the current balance and then saves it in the
-                        //database, then closes the tab
-                        userReference.child(ownerId).child("balance").setValue(newBalance.toString())
-                        tabReference.child(tabId).child("open").setValue(false)
-                    }
+                //checks to ensure the tab hasn't already been closed
+                if(snapshot.child("open").getValue<Boolean>() == true){
 
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.i(TAG, "error")
-                    }
-                })
+                    //gets the owner of the tab
+                    val ownerId = snapshot.child("owner").getValue<String>().toString()
 
+                    //this line is what actually grabs the balance
+                    val payout = snapshot.child("balance").getValue<String>().toString()
+                    //this second listener gets the current balance of the owner
+                    userReference.child(ownerId).child("balance")
+                        .addListenerForSingleValueEvent(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val currentBalance = snapshot.getValue<String>().toString()
+                            val newBalance = payout.toFloat() + currentBalance.toFloat()
+                            //adds the new balance to the current balance and then saves it in the
+                            //database, then closes the tab
+                            userReference.child(ownerId).child("balance").setValue(newBalance.toString())
+                            tabReference.child(tabId).child("open").setValue(false)
+                        }
+                            override fun onCancelled(error: DatabaseError) {
+                                Log.i(TAG, "error")
+                            }
+                        })
+
+                } else{
+                    Log.i(TAG, "Tab has already been closed")
+                }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.i(TAG, "error")
             }
         })
     }
 
-    /**
-     * queries the database to check if a particular user has paid for this tab
-     * user: the user that is being queried
-     * tabId: the unique integer identifier for this tab
-     * returns: true if the user has paid, false if there are any errors or if they have not paid
-     */
-    //this function should not be called here.  listeners should be set up in the dashboard page
-//    fun refreshPayments(user: String, tabId: Int) : Boolean {
-//        mAuth = FirebaseAuth.getInstance()
-//        mAuth.
-//        if()
-//    }
-
     companion object {
         val TAG = "FTK"
     }
 
+    /**
+     * tests the database by creating a small tab, used for debugging purposes
+     */
     fun testDatabase() : String{
         val userArrayList = ArrayList<String>()
         userArrayList.add("bob@gmail.com")

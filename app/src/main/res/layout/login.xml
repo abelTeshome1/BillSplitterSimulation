@@ -50,12 +50,12 @@
 
             android:hint="Password"
             android:inputType="textPassword"
-            android:text= "pikapika"
             android:lines="1"
-
             android:maxLines="1"
 
             android:singleLine="true"
+
+            android:text=""
 
             android:textColor="#000000" />
 
@@ -69,7 +69,7 @@
             android:background="@drawable/border"
 
             android:hint="Email"
-            android:text= "iabespade@gmail.com"
+            android:text= ""
             android:lines="1"
             android:maxLines="1"
 

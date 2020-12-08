@@ -11,6 +11,10 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * this adapter is for use in the TabDetailsActivity when the tabOwner is accessing the activity for
+ * the current tab
+ */
 class UserListAdapter(private val mContext: Context) : BaseAdapter() {
     internal class Item(
         var email: String = "",
@@ -20,14 +24,15 @@ class UserListAdapter(private val mContext: Context) : BaseAdapter() {
     private val mItems =ArrayList<Item>()
 
     fun add(email: String, amount: String){
-        Log.i("ftk", email)
-        mItems.add(Item(email.replace('^','.'), amount))
+        mItems.add(Item(email, amount))
     }
+
     override fun getView(pos: Int, convertView: View?, parent: ViewGroup?): View {
         val cur = getItem(pos) as Item
         val newView: View
 
         val viewHolder: ViewHolder
+        //creates a new view if the viewholder is not converting a view
         if(null == convertView){
             newView = mLayoutInflater.inflate(R.layout.user_list_view_item, parent, false)
 
@@ -47,6 +52,7 @@ class UserListAdapter(private val mContext: Context) : BaseAdapter() {
         viewHolder.amountView.text = cur.amount
         viewHolder.checkView.setImageResource(R.drawable.green_checkmark)
 
+        //shows the checkmark if the user has contributed any money, hides it otherwise
         if(cur.amount == "$0"){
             viewHolder.checkView.visibility = View.INVISIBLE
         } else{
