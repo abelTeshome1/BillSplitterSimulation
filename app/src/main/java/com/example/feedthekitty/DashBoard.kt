@@ -273,7 +273,11 @@ class DashBoard : AppCompatActivity() {
             this,
             android.R.layout.simple_dropdown_item_1line, allUsers
         )
+<<<<<<< HEAD
         val textView = findViewById(R.id.add_user) as AutoCompleteTextView
+=======
+        val textView = findViewById<AutoCompleteTextView>(R.id.add_user)
+>>>>>>> 9e544db03a42803f3def9249d96a46fd9bc3741b
         textView.setAdapter(adapter)
 
     }
