@@ -280,7 +280,7 @@ class TabDetailActivity : AppCompatActivity(){
 
         //displays how much the user has contributed
         val currentContribution = getCurrentUserContribution()
-        val contributedText = "you have contributed $currentContribution to this fund."
+        val contributedText = "you have contributed $$currentContribution to this fund."
         amountContributedView.text = contributedText
         val numUsers = users.split(",").size.toFloat()
         val recDonation = totalRequested.toFloat() / numUsers
