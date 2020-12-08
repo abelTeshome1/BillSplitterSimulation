@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import org.w3c.dom.Text
 
 class TabDetailActivity : AppCompatActivity(){
 
@@ -43,6 +44,7 @@ class TabDetailActivity : AppCompatActivity(){
     private lateinit var closeTabButton: Button
     private lateinit var closedTextView: TextView
     private lateinit var recommendedView: TextView
+    private lateinit var recommendedText: TextView
 
     internal lateinit var mAdapter: UserListAdapter
 
@@ -83,6 +85,7 @@ class TabDetailActivity : AppCompatActivity(){
         closeTabButton = findViewById(R.id.closeTabButton)
         closedTextView = findViewById(R.id.closedText)
         recommendedView = findViewById(R.id.recommendedView)
+        recommendedText = findViewById(R.id.recommendedText)
 
 
         Log.i(TAG, "set up views")
@@ -156,6 +159,7 @@ class TabDetailActivity : AppCompatActivity(){
         newContributionView.visibility = View.GONE
         contributeMoreText.visibility = View.GONE
         recommendedView.visibility = View.GONE
+        recommendedText.visibility = View.GONE
         listView.visibility = View.VISIBLE
         //if the tab has been closed the close button should not appear
         if(open) {
@@ -262,11 +266,13 @@ class TabDetailActivity : AppCompatActivity(){
             contributeMoreText.text = "Contribute more?"
             newContributionView.visibility = View.VISIBLE
             recommendedView.visibility = View.VISIBLE
+            recommendedText.visibility = View.VISIBLE
         } else {
             paymentButton.visibility = View.INVISIBLE
             contributeMoreText.text = "This tab has been closed"
             newContributionView.visibility = View.INVISIBLE
             recommendedView.visibility = View.INVISIBLE
+            recommendedText.visibility = View.INVISIBLE
         }
         contributeMoreText.visibility = View.VISIBLE
         amountContributedView.visibility = View.VISIBLE

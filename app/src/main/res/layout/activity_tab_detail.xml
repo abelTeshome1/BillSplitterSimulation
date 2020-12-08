@@ -221,11 +221,12 @@
         android:id="@+id/recommendedView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="15dp"
         android:text="$0.00"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/recommendedText"
-        tools:layout_editor_absoluteY="453dp" />
+        app:layout_constraintBottom_toTopOf="@+id/contributeMoreText"
+        app:layout_constraintStart_toEndOf="@+id/recommendedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
