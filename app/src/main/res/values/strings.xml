@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Feed The Kitty</string>
     <string name="paymentHint">$0.00</string>
+    <string name="payment_confirmation_string">Are you sure you want to contribute?</string>
+    <string name="close_tab_confirmation">Are you sure you want to close the Tab? This will pay you the balance.</string>
+    <string name="tab_closed">This tab has been closed</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

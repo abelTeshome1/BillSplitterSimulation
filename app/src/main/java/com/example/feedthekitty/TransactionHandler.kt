@@ -199,14 +199,14 @@ class TransactionHandler {
         val userReference = database.getReference("Users")
         mAuth = FirebaseAuth.getInstance()
         //this first listener gets the balance of the tab
+        //this function can only be called if the user is the owner of the tab, so it is safe
+        //to assume the owner is the current user
+        val ownerId = mAuth!!.currentUser!!.uid
 
         tabReference.child(tabId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 //checks to ensure the tab hasn't already been closed
                 if(snapshot.child("open").getValue<Boolean>() == true){
-
-                    //gets the owner of the tab
-                    val ownerId = snapshot.child("owner").getValue<String>().toString()
 
                     //this line is what actually grabs the balance
                     val payout = snapshot.child("balance").getValue<String>().toString()
@@ -246,9 +246,9 @@ class TransactionHandler {
     fun testDatabase() : String{
         val userArrayList = ArrayList<String>()
         userArrayList.add("bob@gmail.com")
-        userArrayList.add("joe@gmail.com")
-        userArrayList.add("steve@gmail.com")
-        userArrayList.add("adam@gmail.com")
+//        userArrayList.add("joe@gmail.com")
+//        userArrayList.add("steve@gmail.com")
+//        userArrayList.add("adam@gmail.com")
         val description = "This is a test, at the start of it no one as contributed anything"
         val id = sendTab(userArrayList,"owner@gmail.com","20","Test","")
 

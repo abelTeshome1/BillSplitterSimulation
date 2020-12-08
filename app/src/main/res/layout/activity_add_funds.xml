@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/gradient_background"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editTextNumberDecimal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginBottom="88dp"
+        android:ems="10"
+        android:hint="$0.0"
+        android:inputType="numberDecimal"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/addFundsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addMoneyText" />
+
+    <Button
+        android:id="@+id/addFundsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="159dp"
+        android:layout_marginEnd="164dp"
+        android:layout_marginBottom="357dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/addMoneyText"
+        android:layout_width="275dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="118dp"
+        android:layout_marginTop="81dp"
+        android:layout_marginEnd="119dp"
+        android:textColor="#FFFFFF"
+        android:text="Add Money to Your Account"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="37dp"
+        android:text="Current Balance:"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNumberDecimal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addMoneyText" />
+
+    <TextView
+        android:id="@+id/currentBalanceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="126dp"
+        android:layout_marginBottom="37dp"
+        android:text="error"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNumberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/addMoneyText" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.feedthekitty
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.renderscript.Sampler
@@ -7,8 +8,12 @@ import android.text.Html
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -47,6 +52,7 @@ class TabDetailActivity : AppCompatActivity(){
     private lateinit var contributeMoreText: TextView
     private lateinit var listView: ListView
     private lateinit var closeTabButton: Button
+    private lateinit var closedTextView: TextView
 
     internal lateinit var mAdapter: UserListAdapter
 
@@ -85,11 +91,9 @@ class TabDetailActivity : AppCompatActivity(){
         contributeMoreText = findViewById(R.id.contributeMoreText)
         listView = findViewById(R.id.userListView)
         closeTabButton = findViewById(R.id.closeTabButton)
+        closedTextView = findViewById(R.id.closedText)
 
         Log.i(TAG, "set up views")
-
-
-
 
         //give the views shared between the user view and owner view their values
         eventView.text = eventName
@@ -106,16 +110,47 @@ class TabDetailActivity : AppCompatActivity(){
             setupPayerView()
         }
 
-
-        paymentButton!!.setOnClickListener(){
-            pay()
+        paymentButton.setOnClickListener(){
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Payment Confirmation")
+            builder.setMessage(R.string.payment_confirmation_string)
+            builder.setPositiveButton(R.string.yes){ _, _ ->
+                pay()
+            }
+            builder.setNegativeButton(R.string.no){ _, _ ->
+                Log.i(TAG, "said no to payment")
+            }
+            builder.show()
         }
 
         closeTabButton.setOnClickListener(){
-            closeTab()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Close Tab Confirmation")
+            builder.setMessage(R.string.close_tab_confirmation)
+            builder.setPositiveButton(R.string.yes){ _, _ ->
+                closeTab()
+            }
+            builder.setNegativeButton(R.string.no){ _, _ ->
+                Log.i(TAG, "said no to close tab")
+            }
+            builder.show()
         }
 
 
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val menuInflater = menuInflater
+        menuInflater.inflate(R.menu.funds_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val intent = Intent(this,AddUserFundsActivity::class.java)
+        startActivity(intent)
+
+        return true
     }
 
     /**
@@ -130,12 +165,18 @@ class TabDetailActivity : AppCompatActivity(){
         contributeMoreText.visibility = View.GONE
         listView.visibility = View.VISIBLE
         //if the tab has been closed the close button should not appear
-        if(open)
+        if(open) {
             closeTabButton.visibility = View.VISIBLE
-        else
+            closedTextView.visibility = View.GONE
+        }        else{
+            closedTextView.visibility = View.VISIBLE
             closeTabButton.visibility = View.INVISIBLE
 
+        }
+
         setupListView()
+        setUpListeners()
+        setUpOwnerListeners()
     }
 
     /**
@@ -161,7 +202,7 @@ class TabDetailActivity : AppCompatActivity(){
             if(cur != ""){
                 //the paid users have their payment information stored in the form of
                 // email@email.com:money  This seperateds the values so they can be passed seperately
-                val curParts = iterator.next().split(':')
+                val curParts = cur.split(':')
                 val email = curParts[0]
                 val amount = curParts[1]
                 processed += "$email,"
@@ -178,6 +219,38 @@ class TabDetailActivity : AppCompatActivity(){
         }
     }
 
+    private fun setUpListeners(){
+        val database = FirebaseDatabase.getInstance()
+        val tabReference = database.getReference("Tabs").child(tabId)
+        //ensures the balance is accurately listed
+        tabReference.child("balance").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(TAG, "lost connection")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                balance = snapshot.getValue<String>().toString()
+                balanceView.text = "$$balance"
+            }
+        })
+
+    }
+    private fun setUpOwnerListeners(){
+        val database = FirebaseDatabase.getInstance()
+        val tabReference = database.getReference("Tabs").child(tabId)
+        tabReference.child("paidUsers").addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                Log.i(TAG, "lost connection")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                paidUsers = snapshot.getValue<String>().toString()
+                //there's no easy way to find out which value specifically has been changed
+                //so it is easier to simply remake the adapter with the new string
+                setupListView()
+            }
+        })
+    }
     /**
      * this function is called if the user who is accessing this tab does not own it.  it hides
      * the buttons and textviews that contain information relevant to only the tab owner, and provides
@@ -187,6 +260,8 @@ class TabDetailActivity : AppCompatActivity(){
         //hide the owner views
         listView.visibility = View.GONE
         closeTabButton.visibility = View.GONE
+        closedTextView.visibility = View.GONE
+
         //if the tab is closed, the user should not be able to pay more, but should still be able
         //to access the tab
         if(open) {
@@ -206,6 +281,8 @@ class TabDetailActivity : AppCompatActivity(){
         val currentContribution = getCurrentUserContribution()
         val contributedText = "you have contributed $currentContribution to this fund."
         amountContributedView.text = contributedText
+
+        setUpListeners()
     }
 
     /**
@@ -365,6 +442,7 @@ class TabDetailActivity : AppCompatActivity(){
             TransactionHandler().closeTab(tabId)
             Toast.makeText(applicationContext,"The Tab has been closed", Toast.LENGTH_LONG)
             closeTabButton.visibility = View.INVISIBLE
+            closedTextView.visibility = View.VISIBLE
         }
     }
 

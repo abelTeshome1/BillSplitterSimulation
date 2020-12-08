@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:textColor="#FFFFFF"
         android:layout_marginTop="15dp"
         android:text="email"
         android:textSize="20dp" />
@@ -31,6 +32,7 @@
         android:id="@+id/amountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:layout_alignBottom="@id/checkmarkImage"
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/checkmarkImage"
@@ -41,6 +43,7 @@
         android:id="@+id/amountView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:layout_alignBottom="@id/checkmarkImage"
         android:layout_toRightOf="@id/amountText"
         android:text="0"
