@@ -46,7 +46,7 @@ class DashBoard : AppCompatActivity() {
 
         val paymentTabs : Button = findViewById(R.id.buttonPaymentTabs)
         paymentTabs.setOnClickListener {
-            val intent = Intent(this, DashBoard::class.java)
+            val intent = Intent(this, PaymentTabs::class.java)
             startActivity(intent)
         }
     }

@@ -23,6 +23,7 @@
         <activity android:name=".DashBoard"
             android:windowSoftInputMode="adjustPan"
             ></activity>z
+        <activity android:name=".PaymentTabs"/>
     </application>
 
 </manifest>
